@@ -3,14 +3,28 @@ import Favorites from "@/components/Favorites";
 
 export default function HomePage() {
   return (
-    <main className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Application Météo</h1>
+    <main className="p-6 max-w-3xl mx-auto space-y-10">
 
-      <SearchBar />
+      {/* HEADER */}
+      <header className="text-center space-y-2">
+        <h1 className="text-4xl font-bold">Application Météo</h1>
+        <p className="text-gray-500">
+          Recherchez une ville et obtenez sa météo en temps réel
+        </p>
+      </header>
 
-      <section className="mt-10">
-        <h2 className="text-xl font-semibold mb-3">Vos favoris</h2>
-        <Favorites />
+      {/* SEARCH BAR */}
+      <section className="bg-white shadow-md border border-gray-100 p-5 rounded-xl">
+        <SearchBar />
+      </section>
+
+      {/* FAVORIS */}
+      <section>
+        <h2 className="text-2xl font-semibold mb-4">⭐ Vos favoris</h2>
+
+        <div className="bg-white border border-gray-100 shadow-sm rounded-xl p-4">
+          <Favorites />
+        </div>
       </section>
     </main>
   );

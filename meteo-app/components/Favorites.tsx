@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { FiArrowRight } from "react-icons/fi";
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -15,18 +16,19 @@ export default function Favorites() {
   }, []);
 
   if (favorites.length === 0) {
-    return <p>Aucune ville en favori pour le moment.</p>;
+    return <p className="text-gray-500">Aucune ville en favori pour le moment.</p>;
   }
 
   return (
-    <ul className="border rounded-lg bg-white shadow">
+    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {favorites.map((city) => (
         <li
           key={city}
-          onClick={() => router.push(`/ville/${city}`)}
-          className="p-2 cursor-pointer hover:bg-gray-100"
+          onClick={() => router.push(`/ville/${encodeURIComponent(city)}`)}
+          className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-50 cursor-pointer transition"
         >
-          {city}
+          <span className="font-medium text-gray-800">{city}</span>
+          <FiArrowRight className="text-blue-600" size={20} />
         </li>
       ))}
     </ul>
