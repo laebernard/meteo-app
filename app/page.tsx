@@ -3,7 +3,7 @@ import Favorites from "@/components/Favorites";
 
 export default function HomePage() {
   return (
-    <main className="p-6 max-w-3xl mx-auto space-y-10">
+    <main className="p-6 mx-auto space-y-10 max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl">
 
       {/* HEADER */}
       <header className="text-center space-y-2">

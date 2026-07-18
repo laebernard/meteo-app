@@ -14,18 +14,31 @@ export default async function CityPage({ params }: { params: Promise<{ name: str
   const weather = await getWeatherByCoords(city.latitude, city.longitude);
 
   return (
-    <main className="p-6 max-w-3xl mx-auto space-y-10">
+    <main className="p-6 mx-auto space-y-10 max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl">
       
-      <header className="flex items-center justify-between mb-8">
+      <header className="flex items-center justify-between gap-4 md:gap-10 lg:gap-20 mb-8 px-2 md:mb-12 md:px-4 md:py-2">
         <BackButton />
 
-        <div className="text-center flex-1">
-          <h1 className="text-4xl font-bold">{city.name}</h1>
-          <p className="text-gray-500 text-lg">{city.country}</p>
+        <div className="
+          text-center flex-1
+          md:text-left
+        ">
+          <h1 className="text-3xl font-bold md:text-5xl">{city.name}</h1>
+          <p className="text-gray-500 text-lg md:text-xl">{city.country}</p>
         </div>
 
-        <WeatherIcon code={weather.current.weatherCode} size={70} />
+        <div className="
+          p-1 rounded-lg
+
+          md:p-3 md:rounded-xl md:bg-white md:shadow-sm md:border md:border-gray-100
+        ">
+          <WeatherIcon 
+            code={weather.current.weatherCode} 
+            size={50}
+          />
+        </div>
       </header>
+
 
 
       <FavoriteButton cityName={city.name} />
