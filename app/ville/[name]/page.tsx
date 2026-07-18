@@ -56,40 +56,84 @@ export default async function CityPage({ params }: { params: Promise<{ name: str
         </div>
       </header>
 
-
-
       <FavoriteButton cityName={city.name} />
+
+      {/* MÉTÉO DU JOUR */}
+      <section className="bg-white shadow-md rounded-xl p-6 border border-gray-100">
+        <h2 className="text-2xl font-semibold mb-4">Météo du jour</h2>
+
+        <div className="flex items-center gap-6 md:gap-10">
+          <WeatherIcon code={weather.current.weatherCode} size={70} />
+
+          <div className="flex flex-col gap-2">
+            <span className="text-xl font-semibold">
+              {getWeatherDescription(weather.current.weatherCode)}
+            </span>
+
+            <span className="text-gray-700 text-lg">
+              Température : <strong>{weather.current.temperature}°C</strong>
+            </span>
+
+            <span className="text-gray-700 text-lg">
+              Humidité : <strong>{weather.current.humidity}%</strong>
+            </span>
+
+            <span className="text-gray-700 text-lg">
+              Vent : <strong>{weather.current.wind} km/h</strong>
+            </span>
+
+            <span className="text-gray-700 text-lg">
+              Indice UV : <strong>{weather.current.uv}</strong>
+            </span>
+          </div>
+        </div>
+      </section>
+
 
       {/* CONDITIONS ACTUELLES */}
       <section className="bg-white shadow-md rounded-xl p-6 border border-gray-100">
         <h2 className="text-2xl font-semibold mb-4">Conditions actuelles</h2>
 
-        <p className="text-gray-600 text-lg md:text-xl">
-          {getWeatherDescription(weather.current.weatherCode)}
-        </p>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 text-lg">
 
-        <div className="grid grid-cols-2 gap-4 text-lg">
           <div className="flex flex-col">
-            <span className="text-gray-500">Température</span>
-            <span className="font-medium">{weather.current.temperature}°C</span>
+            <span className="text-gray-500">Température ressentie</span>
+            <span className="font-medium">{weather.current.feelsLike}°C</span>
           </div>
 
           <div className="flex flex-col">
-            <span className="text-gray-500">Humidité</span>
-            <span className="font-medium">{weather.current.humidity}%</span>
+            <span className="text-gray-500">Pression</span>
+            <span className="font-medium">{weather.current.pressure} hPa</span>
           </div>
 
           <div className="flex flex-col">
-            <span className="text-gray-500">Vent</span>
-            <span className="font-medium">{weather.current.wind} km/h</span>
+            <span className="text-gray-500">Visibilité</span>
+            <span className="font-medium">{weather.current.visibility} m</span>
           </div>
 
           <div className="flex flex-col">
-            <span className="text-gray-500">Indice UV</span>
-            <span className="font-medium">{weather.current.uv}</span>
+            <span className="text-gray-500">Point de rosée</span>
+            <span className="font-medium">{weather.current.dewPoint}°C</span>
           </div>
+
+          <div className="flex flex-col">
+            <span className="text-gray-500">Couverture nuageuse</span>
+            <span className="font-medium">{weather.current.cloudCover}%</span>
+          </div>
+
+          <div className="flex flex-col">
+            <span className="text-gray-500">Lever du soleil</span>
+            <span className="font-medium">{weather.daily[0].sunrise}</span>
+          </div>
+
+          <div className="flex flex-col">
+            <span className="text-gray-500">Coucher du soleil</span>
+            <span className="font-medium">{weather.daily[0].sunset}</span>
+          </div>
+
         </div>
       </section>
+
 
       {/* PRÉVISIONS */}
       <section>
