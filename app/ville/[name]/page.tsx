@@ -2,6 +2,7 @@ import { getCityCoords, getWeatherByCoords } from "@/lib/weather";
 import type { DailyForecast } from "@/lib/types";
 import FavoriteButton from "@/components/FavoriteButton";
 import WeatherIcon from "@/components/WeatherIcon";
+import BackButton from "@/components/BackButton";
 
 export default async function CityPage({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
@@ -15,15 +16,17 @@ export default async function CityPage({ params }: { params: Promise<{ name: str
   return (
     <main className="p-6 max-w-3xl mx-auto space-y-10">
       
-      {/* HEADER */}
-      <header className="flex items-center justify-between">
-        <div>
+      <header className="flex items-center justify-between mb-8">
+        <BackButton />
+
+        <div className="text-center flex-1">
           <h1 className="text-4xl font-bold">{city.name}</h1>
           <p className="text-gray-500 text-lg">{city.country}</p>
         </div>
 
         <WeatherIcon code={weather.current.weatherCode} size={70} />
       </header>
+
 
       <FavoriteButton cityName={city.name} />
 
