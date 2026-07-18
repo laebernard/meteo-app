@@ -5,6 +5,7 @@ import WeatherIcon from "@/components/WeatherIcon";
 import BackButton from "@/components/BackButton";
 import { formatDate } from "@/lib/formatDate";
 import { getWeatherDescription } from "@/lib/weatherDescription";
+import Loader from "@/components/Loader";
 
 export default async function CityPage({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
@@ -13,8 +14,10 @@ export default async function CityPage({ params }: { params: Promise<{ name: str
   const city = await getCityCoords(cityName);
   if (!city) return <p className="text-center mt-10 text-red-500">Ville introuvable.</p>;
 
+  
   const weather = await getWeatherByCoords(city.latitude, city.longitude);
-
+  if (!weather) return <Loader />;
+  
   return (
     <main className="p-6 mx-auto space-y-10 max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl">
       
