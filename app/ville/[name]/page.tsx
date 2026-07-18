@@ -4,6 +4,7 @@ import FavoriteButton from "@/components/FavoriteButton";
 import WeatherIcon from "@/components/WeatherIcon";
 import BackButton from "@/components/BackButton";
 import { formatDate } from "@/lib/formatDate";
+import { getWeatherDescription } from "@/lib/weatherDescription";
 
 export default async function CityPage({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
@@ -48,6 +49,10 @@ export default async function CityPage({ params }: { params: Promise<{ name: str
       <section className="bg-white shadow-md rounded-xl p-6 border border-gray-100">
         <h2 className="text-2xl font-semibold mb-4">Conditions actuelles</h2>
 
+        <p className="text-gray-600 text-lg md:text-xl">
+          {getWeatherDescription(weather.current.weatherCode)}
+        </p>
+
         <div className="grid grid-cols-2 gap-4 text-lg">
           <div className="flex flex-col">
             <span className="text-gray-500">Température</span>
@@ -87,6 +92,7 @@ export default async function CityPage({ params }: { params: Promise<{ name: str
                 <span className="font-semibold capitalize">
                   {formatDate(day.date)}
                 </span>
+                <span className="text-gray-600">{getWeatherDescription(day.weatherCode)}</span>
                 <span className="text-gray-600">
                   {day.tempMin}° / {day.tempMax}°
                 </span>
