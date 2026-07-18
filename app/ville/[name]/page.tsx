@@ -3,6 +3,7 @@ import type { DailyForecast } from "@/lib/types";
 import FavoriteButton from "@/components/FavoriteButton";
 import WeatherIcon from "@/components/WeatherIcon";
 import BackButton from "@/components/BackButton";
+import { formatDate } from "@/lib/formatDate";
 
 export default async function CityPage({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
@@ -83,7 +84,9 @@ export default async function CityPage({ params }: { params: Promise<{ name: str
               <WeatherIcon code={day.weatherCode} size={45} />
 
               <div className="flex flex-col">
-                <span className="font-semibold">{day.date}</span>
+                <span className="font-semibold capitalize">
+                  {formatDate(day.date)}
+                </span>
                 <span className="text-gray-600">
                   {day.tempMin}° / {day.tempMax}°
                 </span>
