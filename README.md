@@ -1,36 +1,171 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weather App — Application Météo
 
-## Getting Started
+Application météo moderne construite avec Next.js 14, TypeScript, TailwindCSS et les API Open‑Meteo.
 
-First, run the development server:
+## Aperçu du projet
+
+Fonctionnalités principales :
+
+ - Recherche de ville avec suggestions
+ - Page météo détaillée
+ - Météo du jour
+ - Conditions actuelles
+ - Prévisions journalières enrichies
+ - Icônes météo dynamiques
+ - Gestion des favoris (localStorage)
+ - Formatage des dates et heures
+ - Loader pendant le chargement
+ - Gestion des erreurs API
+ - Interface responsive mobile → desktop
+
+## Technologies utilisées
+
+ - Next.js 14 (App Router)
+ - React
+ - TypeScript
+ - TailwindCSS
+ - Open‑Meteo API
+ - Open‑Meteo Geocoding API
+ - LocalStorage
+ - ESLint / Prettier
+ 
+## API utilisées
+
+- Geocoding API
+
+Convertit un nom de ville en coordonnées GPS.
+
+```bash
+https://geocoding-api.open-meteo.com/v1/search
+```
+
+- Weather API
+
+Récupère la météo actuelle + prévisions journalières.
+
+```bash
+https://api.open-meteo.com/v1/forecast
+```
+
+
+Structure du projet
+
+```bash
+app/
+ ├── page.tsx                → page d’accueil
+ └── ville/[name]/page.tsx   → page météo d’une ville
+
+components/
+ ├── BackButton.tsx
+ ├── FavoriteButton.tsx
+ ├── Loader.tsx
+ ├── WeatherIcon.tsx
+
+lib/
+ ├── weather.ts              → appels API
+ ├── types.ts                → types TypeScript
+ ├── formatDate.ts           → formatage des dates
+ ├── formatTime.ts           → formatage des heures
+ ├── weatherDescription.ts   → description météo FR
+```
+
+## Installation
+
+1. Cloner le projet
+
+```bash
+git clone <url-du-projet>
+cd weather-app
+```
+
+2. Installer les dépendances
+
+```bash
+npm install
+```
+
+3. Lancer le projet
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Le projet sera disponible sur :
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Configuration
 
-## Learn More
+Créer un fichier .env.local :
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+NEXT_PUBLIC_WEATHER_API=https://api.open-meteo.com/v1/forecast
+NEXT_PUBLIC_GEOCODING_API=https://geocoding-api.open-meteo.com/v1/search
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Fonctionnalités détaillées
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Météo du jour
 
-## Deploy on Vercel
+    - Icône météo
+    - Description
+    - Température
+    - Humidité
+    - Vent
+    - UV
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Conditions actuelles 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    - Température ressentie
+    - Pression
+    - Visibilité
+    - Point de rosée
+    - Couverture nuageuse
+    -Lever du soleil
+    - Coucher du soleil
+
+- Prévisions journalières
+    - Températures min/max
+    - Description météo
+    - Vent min/max
+    - Humidité min/max
+    - UV max
+    - Lever/coucher du soleil formatés
+
+- Favoris
+    - Ajouter / retirer une ville
+    - Stockage dans localStorage
+    - Affichage sur la page d’accueil
+
+- Gestion des erreurs
+
+    - Ville introuvable
+    - API indisponible
+    - Loader pendant le chargement
+
+## Responsive design
+
+Mobile : interface compacte
+
+Desktop : interface large
+
+Grands écrans : mise en page premium
+
+## Qualité du code
+
+- Types stricts
+- Composants réutilisables
+- API centralisée
+- Formatage automatique (Prettier)
+- Pas de warnings Next.js
+
+
+## 📸 Aperçu de l’application
+
+Voici un aperçu de l’interface :
+
+![Weather App Screenshot](./images/homePage.png)
+
+![Weather App Screenshot](./images/pageMeteo.png)
+
+![Weather App Screenshot](./images/previsionPage.png)
