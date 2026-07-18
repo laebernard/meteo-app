@@ -6,6 +6,7 @@ import BackButton from "@/components/BackButton";
 import { formatDate } from "@/lib/formatDate";
 import { getWeatherDescription } from "@/lib/weatherDescription";
 import Loader from "@/components/Loader";
+import { formatTime } from "@/lib/formatTime";
 
 export default async function CityPage({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
@@ -143,20 +144,54 @@ export default async function CityPage({ params }: { params: Promise<{ name: str
           {weather.daily.map((day: DailyForecast) => (
             <li
               key={day.date}
-              className="flex items-center gap-4 bg-white shadow-sm border border-gray-100 p-4 rounded-xl"
+              className="flex flex-col gap-3 bg-white shadow-sm border border-gray-100 p-4 rounded-xl"
             >
-              <WeatherIcon code={day.weatherCode} size={45} />
+              <div className="flex items-center gap-4">
+                <WeatherIcon code={day.weatherCode} size={45} />
 
-              <div className="flex flex-col">
-                <span className="font-semibold capitalize">
-                  {formatDate(day.date)}
-                </span>
-                <span className="text-gray-600">{getWeatherDescription(day.weatherCode)}</span>
-                <span className="text-gray-600">
-                  {day.tempMin}° / {day.tempMax}°
-                </span>
+                <div className="flex flex-col">
+                  <span className="font-semibold capitalize">
+                    {formatDate(day.date)}
+                  </span>
+                  <span className="text-gray-600">
+                    {getWeatherDescription(day.weatherCode)}
+                  </span>
+                  <span className="text-gray-600">
+                    {day.tempMin}° / {day.tempMax}°
+                  </span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-700">
+
+                <div>
+                  <span className="text-gray-500">Vent</span>
+                  <div>{day.windMin}–{day.windMax} km/h</div>
+                </div>
+
+                <div>
+                  <span className="text-gray-500">Humidité</span>
+                  <div>{day.humidityMin}–{day.humidityMax}%</div>
+                </div>
+
+                <div>
+                  <span className="text-gray-500">UV max</span>
+                  <div>{day.uvMax}</div>
+                </div>
+
+                <div>
+                  <span className="text-gray-500">Lever du soleil</span>
+                  <div>{formatTime(day.sunrise)}</div>
+                </div>
+
+                <div>
+                  <span className="text-gray-500">Coucher du soleil</span>
+                  <div>{formatTime(day.sunset)}</div>
+                </div>
+
               </div>
             </li>
+
           ))}
         </ul>
       </section>
