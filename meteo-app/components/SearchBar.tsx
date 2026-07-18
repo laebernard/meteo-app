@@ -49,7 +49,7 @@ export default function SearchBar() {
   }
 
   function handleSelect(city: CityResult) {
-    router.push(`/ville/${city.name}`);
+    router.push(`/ville/${encodeURIComponent(city.name)}`);
   }
 
   return (
