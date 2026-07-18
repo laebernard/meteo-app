@@ -1,3 +1,5 @@
+import type { DailyForecast } from "./types";
+
 export async function getCityCoords(name: string) {
   const url = `${process.env.NEXT_PUBLIC_GEOCODING_API}?name=${name}&count=1&language=fr`;
 
@@ -17,10 +19,17 @@ export async function getCityCoords(name: string) {
 }
 
 export async function getWeatherByCoords(lat: number, lon: number) {
-  const url = `${process.env.NEXT_PUBLIC_WEATHER_API}?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,uv_index&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
+  const url = `${process.env.NEXT_PUBLIC_WEATHER_API}?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,uv_index,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto`;
 
   const res = await fetch(url);
   const data = await res.json();
+
+  const daily: DailyForecast[] = data.daily.time.map((date: string, i: number) => ({
+    date,
+    tempMin: data.daily.temperature_2m_min[i],
+    tempMax: data.daily.temperature_2m_max[i],
+    weatherCode: data.daily.weather_code[i],
+  }));
 
   return {
     current: {
@@ -28,11 +37,8 @@ export async function getWeatherByCoords(lat: number, lon: number) {
       humidity: data.current.relative_humidity_2m,
       wind: data.current.wind_speed_10m,
       uv: data.current.uv_index,
+      weatherCode: data.current.weather_code,
     },
-    daily: data.daily.time.map((date: string, i: number) => ({
-      date,
-      tempMin: data.daily.temperature_2m_min[i],
-      tempMax: data.daily.temperature_2m_max[i],
-    })),
+    daily,
   };
 }

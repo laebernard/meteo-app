@@ -1,22 +1,19 @@
 import { getCityCoords, getWeatherByCoords } from "@/lib/weather";
+import type { DailyForecast } from "@/lib/types";
+import FavoriteButton from "@/components/FavoriteButton";
+import WeatherIcon from "@/components/WeatherIcon";
 
-type Props = {
-  params: {
-    name: string;
-  };
-};
+export default async function CityPage({ params }: { params: Promise<{ name: string }> }) {
+  const { name } = await params;
 
-export default async function CityPage({ params }: Props) {
-  const cityName = decodeURIComponent(params.name);
+  const cityName = decodeURIComponent(name);
 
-  // 1. Géocodage
   const city = await getCityCoords(cityName);
 
   if (!city) {
     return <p>Ville introuvable.</p>;
   }
 
-  // 2. Météo
   const weather = await getWeatherByCoords(city.latitude, city.longitude);
 
   return (
@@ -25,26 +22,30 @@ export default async function CityPage({ params }: Props) {
         {city.name} ({city.country})
       </h1>
 
-      {/* Conditions actuelles */}
+      <WeatherIcon code={weather.current.weatherCode} size={60} />
+
+      <FavoriteButton cityName={city.name} />
+
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-3">Conditions actuelles</h2>
-        <div className="space-y-1">
-          <p>Température : {weather.current.temperature}°C</p>
-          <p>Humidité : {weather.current.humidity}%</p>
-          <p>Vent : {weather.current.wind} km/h</p>
-          <p>Indice UV : {weather.current.uv}</p>
-        </div>
+        <p>Température : {weather.current.temperature}°C</p>
+        <p>Humidité : {weather.current.humidity}%</p>
+        <p>Vent : {weather.current.wind} km/h</p>
+        <p>Indice UV : {weather.current.uv}</p>
       </section>
 
-      {/* Prévisions */}
       <section>
         <h2 className="text-xl font-semibold mb-3">Prévisions</h2>
-        <ul className="space-y-2">
-          {weather.daily.map((day) => (
-            <li key={day.date} className="border p-3 rounded-lg">
-              <strong>{day.date}</strong> — {day.tempMin}° / {day.tempMax}°
+        <ul>
+          {weather.daily.map((day: DailyForecast) => (
+            <li key={day.date} className="border p-3 rounded-lg flex items-center gap-3">
+                <WeatherIcon code={day.weatherCode} size={40} />
+                <div>
+                <strong>{day.date}</strong> — {day.tempMin}° / {day.tempMax}°
+                </div>
             </li>
-          ))}
+           ))}
+
         </ul>
       </section>
     </main>
